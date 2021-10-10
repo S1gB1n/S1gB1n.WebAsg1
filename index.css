@@ -1,0 +1,201 @@
+:root{
+    --primary_color_a: #51279B;
+    --primary_color_b: #8662C7;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+.menu{
+    background-image: url('f2021-assign1/images/florence.jpg');
+    background-color: grey;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 615pt;
+}
+
+.menu_logo{
+    float: left;
+    padding: .5%;
+    background-color: none;
+}
+
+img.logo{
+    width: 50pt;
+    height: 50pt;
+}
+
+.menu_bar{
+    float: left;
+    height: 50pt;
+    width: 93%;
+    resize: horizontal;
+    background-color: none;
+}
+
+.menu_bar ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: 0;
+    background-color: none;
+}
+
+.menu_bar li a{
+    float: left;
+    color: var(--primary_color_a);
+    display: block;
+    text-align: center;
+    margin-top: 18pt;
+    margin-left: 0;
+    padding: 5pt;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 15pt;
+    width: 12%;
+    background-color: none;
+}
+
+.menu_bar li a:hover{
+    background-color: var(--primary_color_b);
+}
+
+.message{
+    background-color: none;
+    margin-top: 100px;
+    padding-left: 10%;
+    padding-bottom: -10pt;
+    width: 100%;
+    float: left;
+    color: white;
+}
+
+.message h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+}
+
+.message p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+}
+
+.learn_more{
+    background-color: var(--primary_color_a);
+    margin-top: 0;
+    margin-left: 10%;
+    padding-top: 10pt;
+    width: 120pt;
+    float:left;
+    text-align: center;
+    height: 30pt;
+}
+
+.learn_more a{
+    background-color: none;
+    text-decoration: none;
+    color: white;
+    border-top: 10pt;
+    padding-bottom: 15pt;
+    margin: 10pt;
+
+    font-size: 15pt;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.learn_more:hover{
+    background-color: var(--primary_color_b);
+}
+
+
+
+
+.container{
+    background-color: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container ul{
+    background-color:  #cadff0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    
+    width: 100%;
+}
+
+.container li {
+    background-color: none;  
+}
+  
+.container li a {
+    background-color: white;
+    float: left;
+    padding: 1%;
+    margin: .5%;
+    width: 30%;  
+
+    text-decoration: none;
+    color: black;
+    height: 100%;
+} 
+
+.container img{
+    background-color: none;
+    width: 100%;
+    height: 100%;
+}
+
+.like_comment img{
+    background-color: none;
+    width: 20px;
+    height: 20px;
+}
+
+.like{
+    background-color: none;
+    float: left;
+
+    width: 75px;
+    height: 25px;
+}
+
+.like p{
+    background-color: none;
+    float: right;
+
+    border-top: 0;
+    margin-top: 0;
+    width: 50px;
+    height: 20px;
+}
+
+.comment{
+    background-color: none;
+    float: left;
+
+    width: 75px;
+    height: 25px;
+}
+
+.comment p{
+    background-color: none;
+    float: right;
+
+    border-top: 0;
+    margin-top: 0;
+    width: 50px;
+    height: 20px;
+}
+
+footer{
+    background-color: #cadff0;
+    float: left;
+    width: 100%;
+    text-orientation: sideways-right;
+}
+
