@@ -1,125 +1,82 @@
 <!DOCTYPE html>
 <html>
+<head>
+   <meta charset="utf-8"/>  
+    <title>COMP 3612</title>   
 
-    <head>
-    <title>  Assignment 1 </title>
-    
-    <link href="index.css" rel="stylesheet">
-    </head>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,500&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assign2.css">
 
-    <body>
-        <div class = "menu"> 
-        
-            <div class = "menu_logo">
-                <img src="f2021-assign1/images/logo.png" class = "logo" alt="Logo">        
-            </div>
+    <script src="plays.json" ></script>
+    <script type="text/javascript" src="helper_function.js" ></script> 
+    <script type="text/javascript" src="assign2.js" ></script>
+</head>
+<body>
 
-            <div class = "menu_bar">
-                 
-                <ul>
-                    <li> <a href="index.html"> HOME </a> </li>
-                    <li> <a href="#"> BROWSE </a> </li>
-                    <li> <a href="#"> DESTINATIONS </a> </li>
-                    <li> <a href="#"> FLIGHTS </a> </li>
-                    <li> <a href="#"> SEARCH </a> </li>
-                    <li> <a href="#"> ABOUT </a> </li>
-                </ul>
-                
-            </div>
+<header>
+   <h1>Assign 2 - Shakespeare Play Viewer</h1>
+</header>
+<main>
 
-            <div class = "message">
-                <h1> Now is the time to explore </h1>
-                <p> Visit the land of your dreams </p>
-            </div>
-    
-            <div class = "learn_more">
-                <a href = "#"> Learn More </a>
-            </div>
-            
-        </div>
+   <section id="playList">
+      <p><label>Sort By: </label>
+      <input type="radio" id="name" name="sort" > <label>Name</label> 
+      <input type="radio" id="date" name="sort" > <label>Date</label> 
+      </p>
+      <h3>Available Plays</h3>
+      <ul id='ulPlayList'>
+         <li data-id="antony_and_cleopatra">Antony and Cleopatra</li>
+         <li data-id="hamlet">Hamlet</li>
+         <li data-id="jcaesar">Julius Caesar</li>
+      </ul>      
+   </section>
+   
+   <aside id="aside_tag">
+      
+      <fieldset id="interface">
+      
+         <h2>Play title here</h2>
+         <select id="actList"></select>
+         <select id="sceneList"></select>      
+         <fieldset>
+            <select id="playerList">
+               <option value=0>All Players</option>
+            </select>      
+          
+            <input type="text" id="txtHighlight" placeholder="Enter a search term" />
+            <button id="btnHighlight" >Filter</button>
+         </fieldset>
+      
+      </fieldset>
 
-        <section class="locations-selection">
-            <div class="container">
-                <ul>
-                    
-                    <li>
-                        <a href="nova-scotia-link.html"> 
-                            <img src="f2021-assign1/images/1-small.jpg" alt="Explore Nova Scotia">
-                            <h4>Explore Nova Scotia</h4>
-                            <p>On board a small sailing ship leaving Lunenburg</p>
-                            <div class=like_comment>
-                                <div class="like">
-                                    <img src="f2021-assign1/images/heart.png" alt="Likes">
-                                    <p>112</p>
-                                </div>
-                                <div class="comment">
-                                    <img src="f2021-assign1/images/comment.png" alt="Comments">
-                                    <p>23</p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a href="santorini-link.html">
-                            <img src="f2021-assign1/images/2-small.jpg" alt="Dusk on Santorini">
-                            <h4>Dusk on Santorini</h4>
-                            <p>Devote yourself to the sunset</p>
-                            <div class="like_comment">
-                                <div class="like">
-                                    <img src="f2021-assign1/images/heart.png" alt="Likes">
-                                    <p>2313</p>
-                                </div>
-                                <div class="comment">
-                                    <img src="f2021-assign1/images/comment.png" alt="Comments">
-                                    <p>18</p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
+      <button id="btnAside" idtype="btnView">Close</button>
+   </aside>
 
-                    <li>
-                        <a href="amsterdam-link.html">
-                            <img src="f2021-assign1/images/3-small.jpg" alt="Amsterdam Flower Market">
-                            <h4>Amsterdam Flower Market</h4>
-                            <p>The only floating flower market in the world</p>
-                            <div class="like_comment">
-                                <div class="like">
-                                    <img src="f2021-assign1/images/heart.png" alt="Likes">
-                                    <p>14</p>
-                                </div>
-                                <div class="comment">
-                                    <img src="f2021-assign1/images/comment.png" alt="Comments">
-                                    <p>5</p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </section>
-        
-    </body>
+   <section id="playHere">
+        <!-- Note you will need to remove or comment out some of this markup; 
+            it is there to show you the markup that your javascript will need to generate.
+        -->   
+      <h2>Play title here</h2>
+      <article id="actHere">
+         <h3>Act name here</h3>
+         <div id="sceneHere">
+			<h4>Scene name here</h4>
+			<p class="title">scene title</p>
+			<p class="direction">stage direction</p>
+			<div class="speech">
+            <span>BERNARDO</span>
+            <p>Who's there?</p>
+         </div>		
+			<div class="speech"><span>FRANCISCO</span><p>Nay, answer me: <b>stand</b>, and unfold yourself.</p></div>		
+			<div class="speech"><span>MARCELLUS</span><p>'Tis gone!</p><p>We do it wrong, being so majestical,</p><p>To offer it the show of violence;</p><p>For it is, as the air, invulnerable,</p><p>And our vain blows malicious mockery.</p><em>Exit Ghost</em></div>         
+			<div class="speech"><span>BERNARDO</span><p>Who's there?</p></div>		
+			<div class="speech"><span>FRANCISCO</span><p>Nay, answer me: <b>stand</b>, and unfold yourself.</p></div>		
+			<div class="speech"><span>MARCELLUS</span><p>'Tis gone!</p><p>We do it wrong, being so majestical,</p><p>To offer it the show of violence;</p><p>For it is, as the air, invulnerable,</p><p>And our vain blows malicious mockery.</p><em>Exit Ghost</em></div>
+		 </div>
+      </article>
+   </section>
 
-    <footer> 
-        <p>
-            <br>Author: Erl John Lyszustre <br> <br>
-            
-            <br>COMP 3612   
-            <br>Assignment #1: Single-Page App
-            <br>Handed:     Sept 20, 2021
-            <br>Due:        Oct 9, 2021 at midnight
-            <br>
-            <br>about us:
-            <br> 
-            <br>
-            <br>privacy policy:
-            <br> This site (html + css) project is only intended for school work.
-            <br>
-            <br> links:
-            <br><a href="https://developer.mapquest.com/"> https://developer.mapquest.com/ </a>  
-            <br>
-        </p> 
-    </footer>
-
+</main>
+   
+</body>
 </html>
