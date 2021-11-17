@@ -287,6 +287,9 @@ async function loadPlays(play, is_play) {
   }
   console.log(plays_text); //test
 
+  let selected_act;
+  let selected_scene;
+
   console.log(play_text); //test
   if (play_text.message) {
     let elements;
@@ -331,7 +334,7 @@ async function loadPlays(play, is_play) {
     elements = [['id', 'btnHighlight'], ['text_node', 'Filter']];
     inner_fieldset.appendChild(create_tag('button', elements));
 
-    let play_here = document.getElementById('playHere');
+    
 
     // add ACTS to selection
     let option;
@@ -344,7 +347,6 @@ async function loadPlays(play, is_play) {
     }
 
     // ACT SELECTION -GENERATES SCENE
-    let selected_act;
     let index_act;
     let click_act = document.getElementById('actList');
     click_act.addEventListener('click', function (e) {
@@ -363,7 +365,6 @@ async function loadPlays(play, is_play) {
     });
 
     // SCENE SELECTION -GENERATES PERSONAL
-    let selected_scene;
     let click_scene = select_scene;
     click_scene.addEventListener('click', function (e) {
       selected_scene = check_selection(click_scene);
@@ -413,6 +414,7 @@ async function loadPlays(play, is_play) {
 
   function view_play_here() {
     // show ACT and SCENE
+    let play_here = document.getElementById('playHere');
     play_here.innerHTML = '';
     elements = [['text_node', play_text.title]];
     play_here.appendChild(create_tag('h2', elements));
