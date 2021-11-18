@@ -1,6 +1,26 @@
 /**
  * Author: Erl John Lydzustre
- * Project: Asg2 - 
+ * Update: 2021 - 11 - 17
+ * 
+ * Instructor: Randy Connolly
+ * 
+ * Project: Asg2: Shakespeare Play Viewer
+ * 
+ * 
+ * Problem:
+ *  Storing to local storage: I did not use the local storage in chrome via the application
+ *                            tab in DevTools. Instead I have used a global variable (play_text) 
+ *                            to store all the visited api fetch.
+ *                            At the beginning I pratically skimmed the part where it said local
+ *                            storage and thought that when the instruction said 
+ *                            "local storage = local variable". Only realized that local storage
+ *                            meant the Window.localStorage API when someone pointed out to me 
+ *                            today (as I am writing this right now (2021 - 11 - 17)). 
+ *                            My code Progress was already too far and too many to change 
+ *                            everything to local storage. I have to practically change most of
+ *                            my code that calls the local variable.
+ *  
+ *  View Play Text: When the play is avaible in the API it shows the 
  */
 
 const EXIST = 0;
@@ -23,6 +43,7 @@ const plays_content = JSON.parse(plays);
  *    ]
  */
 var plays_text = [];
+let player_available= [];
 var index = 0;
 
 
@@ -75,23 +96,25 @@ function create_tag(tag_name, elements) {
     } else if (elem == 'value') {
       tag.setAttribute('value', val);
     } else if (elem == 'type') {
-      tag.setAttribute('type', val)
+      tag.setAttribute('type', val);
     } else if (elem == 'placeHolder') {
-      tag.setAttribute('placeHolder', val)
+      tag.setAttribute('placeHolder', val);
     } else if (elem == 'idType') {
-      tag.setAttribute('idType', val)
+      tag.setAttribute('idType', val);
     } else if (elem == 'index') {
-      tag.setAttribute('index', val)
+      tag.setAttribute('index', val);
     } else if (elem == 'position') {
-      tag.setAttribute('position', val)
+      tag.setAttribute('position', val);
     } else if (elem == 'player') {
-      tag.setAttribute('player', val)
+      tag.setAttribute('player', val);
     } else if (elem == 'desc') {
-      tag.setAttribute('desc', val)
+      tag.setAttribute('desc', val);
     } else if (elem == 'class') {
-      tag.setAttribute('class', val)
+      tag.setAttribute('class', val);
     } else if (elem == 'div') {
-      tag.setAttribute('div', val)
+      tag.setAttribute('div', val);
+    }else if (elem == 'innerHTML') {
+      tag.innerHTML = val;
     }
   }
   return tag;
@@ -264,6 +287,84 @@ function check_selection(selection) {
 }
 
 /**
+ *  This function prints out the necessary data for playHere section on the browser
+ */
+async function view_play_here(play_text, selected_act, selected_scene, filter_speaker, word_search) {
+
+  // show ACT and SCENE
+  let play_here = document.getElementById('playHere');
+  play_here.innerHTML = '';
+  elements = [['text_node', play_text.title]];
+  play_here.appendChild(create_tag('h2', elements));
+
+  elements = [['id', 'actHere']];
+  let article_act_here = create_tag('article', elements);
+  play_here.appendChild(article_act_here);
+
+  elements = [['text_node', selected_act.id]];
+  article_act_here.appendChild(create_tag('h3', elements));
+
+  elements = [['id', 'sceneHere']];
+  let div_scene_here = create_tag('div', elements);
+  article_act_here.appendChild(div_scene_here);
+
+  elements = [['text_node', selected_scene.id]];
+  div_scene_here.appendChild(create_tag('h4', elements));
+
+  let act_number = selected_act.getAttribute('index');
+  let scene_number = selected_scene.getAttribute('index');
+  let scenes_title = play_text.acts[act_number].scenes[scene_number].title;
+  elements = [['class', 'title'], ['text_node', scenes_title]];
+  article_act_here.appendChild(create_tag('p', elements));
+
+  let stage_direction = play_text.acts[act_number].scenes[scene_number].stageDirection;
+  elements = [['class', 'direction'], ['text_node', stage_direction]];
+  article_act_here.appendChild(create_tag('p', elements));
+
+  let print_speaker_speech = true;
+  for (let i in play_text.acts[act_number].scenes[scene_number].speeches) {
+
+    elements = [['class', 'speech']];
+    let div_speech = create_tag('div', elements);
+    article_act_here.appendChild(div_speech);
+
+    let speaker_name = play_text.acts[act_number].scenes[scene_number].speeches[i].speaker;
+    if (filter_speaker != null) {
+      if (filter_speaker === speaker_name || filter_speaker === 'ALL PLAYERS') {
+        print_speaker_speech = true;
+      }else {
+        print_speaker_speech = false;
+      }
+    }
+    if (print_speaker_speech) {
+      elements = [['text_node', speaker_name]];
+      div_speech.appendChild(create_tag('span', elements));
+
+      let speaker_lines = play_text.acts[act_number].scenes[scene_number].speeches[i].lines;
+      
+      let found = false;
+      let new_line = [];
+      var regex = new RegExp(word_search, 'gi');
+      for(let i in speaker_lines){
+        new_line[i] = speaker_lines[i].replace(regex, '<mark><b>' + word_search + '</b></mark>');
+        regex = new RegExp(word_search, 'i');
+        if(speaker_lines[i].match(regex)){
+          found = true;
+        }
+      }
+
+      if(found){
+        let line = create_tag('p', [['innerHTML', new_line]]);
+        div_speech.appendChild(line);
+      }else{
+        elements = [['text_node', speaker_lines]];
+        div_speech.appendChild(create_tag('p', elements));
+      }
+    }
+  }
+}
+
+/**
  *  stores/loads the plays into plays_text[]
  * 
  *    [
@@ -314,6 +415,7 @@ async function loadPlays(play, is_play) {
 
     elements = [['id', "sceneList"]];
     let select_scene = create_tag('select', elements);
+    select_scene.disabled = true;
     interface.appendChild(select_scene);
 
     elements = [];
@@ -322,6 +424,7 @@ async function loadPlays(play, is_play) {
 
     elements = [['id', 'playerList']];
     let inner_select = create_tag('select', elements);
+    inner_select.disabled = true;
     inner_fieldset.appendChild(inner_select);
 
     elements = [['value', 0], ['text_node', 'All Players']];
@@ -329,12 +432,12 @@ async function loadPlays(play, is_play) {
     inner_select.appendChild(inner_option);
 
     elements = [['type', 'text'], ['id', 'txtHighlight'], ['placeHolder', 'Enter a search term']];
-    inner_fieldset.appendChild(create_tag('input', elements));
+    let txtHighlight_bar = create_tag('input', elements);
+    txtHighlight_bar.disabled = true;
+    inner_fieldset.appendChild(txtHighlight_bar);
 
     elements = [['id', 'btnHighlight'], ['text_node', 'Filter']];
     inner_fieldset.appendChild(create_tag('button', elements));
-
-    
 
     // add ACTS to selection
     let option;
@@ -351,6 +454,7 @@ async function loadPlays(play, is_play) {
     let click_act = document.getElementById('actList');
     click_act.addEventListener('click', function (e) {
       selected_act = check_selection(click_act);
+      select_scene.disabled = false;
 
       select_scene.innerHTML = '';
       let scene;
@@ -368,33 +472,43 @@ async function loadPlays(play, is_play) {
     let click_scene = select_scene;
     click_scene.addEventListener('click', function (e) {
       selected_scene = check_selection(click_scene);
+      inner_select.disabled = false;
+      txtHighlight_bar.disabled = false;
 
       let select_player_list = inner_select;
       select_player_list.innerHTML = '';
-      let persona;
-      for (let i in play_text.persona) {
-        persona = play_text.persona[i];
-        if (index_act == persona.position) {
-          elements = [
-            ['position', persona.position],
-            ['player', persona.player],
-            ['desc', persona.desc],
-            ['text_node', persona.player]
-          ];
-          option = create_tag('option', elements);
-          select_player_list.appendChild(option);
-        }
-      }
-      view_play_here();
-      console.log(selected_act); //test
-      console.log(selected_scene); //test
+      elements = [['text_node', 'ALL PLAYER']];
+      option = create_tag('option', elements);
+      select_player_list.appendChild(option);
+
+      view_play_here(play_text, selected_act, selected_scene, null, null);
     });
 
     let selected_persona;
     let click_persona = inner_select;
     click_persona.addEventListener('click', function (e) {
-      selected_persona = check_selection(click_persona);
+      selected_persona = check_selection(click_persona).getAttribute('id');
       console.log(selected_persona);
+
+      let act_i = selected_act.getAttribute('index');
+      let scene_i = selected_scene.getAttribute('index');
+      let list_player_speech = play_text.acts[act_i].scenes[scene_i].speeches;
+      let temp = [];
+      for(let i in list_player_speech){
+        temp[i] = list_player_speech[i].speaker;
+      }
+      player_available = temp.filter(distinct);
+
+      select_player_list = inner_select;
+      select_player_list.innerHTML = '';      
+      
+      elements = [['text_node', 'ALL PLAYERS'], ['id', 'ALL PLAYERS']];
+      select_player_list.appendChild(create_tag('option', elements));
+      for(let i in player_available){
+        elements = [['text_node', player_available[i]], ['id', player_available[i]]];
+        select_player_list.appendChild(create_tag('option', elements));
+      }
+      console.log(select_player_list); //test
     });
 
     // SEARCH WORD HIGHTLIGHT EVENT
@@ -407,61 +521,15 @@ async function loadPlays(play, is_play) {
     // FILTER EVENT
     let click_filter = document.getElementById('btnHighlight');
     click_filter.addEventListener('click', function (e) {
-      console.log(click_filter);
+      console.log(click_filter); //test
+      let search_word = input_term.getAttribute('placeholder');
+      if (typeof selected_scene !== 'undefined') {
+        view_play_here(play_text, selected_act, selected_scene, selected_persona, search_word);
+      }else{
+        view_play_here(play_text, selected_act, selected_scene, null, search_word);
+      }
     });
   }
-
-
-  function view_play_here() {
-    // show ACT and SCENE
-    let play_here = document.getElementById('playHere');
-    play_here.innerHTML = '';
-    elements = [['text_node', play_text.title]];
-    play_here.appendChild(create_tag('h2', elements));
-
-    elements = [['id', 'actHere']];
-    let article_act_here = create_tag('article', elements);
-    play_here.appendChild(article_act_here);
-
-    elements = [['text_node', selected_act.id]];
-    article_act_here.appendChild(create_tag('h3', elements));
-
-    elements = [['id', 'sceneHere']];
-    let div_scene_here = create_tag('div', elements);
-    article_act_here.appendChild(div_scene_here);
-
-    elements = [['text_node', selected_scene.id]];
-    div_scene_here.appendChild(create_tag('h4', elements));
-
-    let act_number = selected_act.getAttribute('index');
-    let scene_number = selected_scene.getAttribute('index');
-    let scenes_title = play_text.acts[act_number].scenes[scene_number].title;
-    elements = [['class', 'title'], ['text_node', scenes_title]];
-    article_act_here.appendChild(create_tag('p', elements));
-
-    let stage_direction = play_text.acts[act_number].scenes[scene_number].stageDirection;
-    elements = [['class', 'direction'], ['text_node', stage_direction]];
-    article_act_here.appendChild(create_tag('p', elements));
-
-    for (let i in play_text.acts[act_number].scenes[scene_number].speeches) {
-      elements = [['class', 'speech']];
-      let div_speech = create_tag('div', elements);
-      article_act_here.appendChild(div_speech);
-
-      let speaker_name = play_text.acts[act_number].scenes[scene_number].speeches[i].speaker;
-      elements = [['text_node', speaker_name]];
-      div_speech.appendChild(create_tag('span', elements));
-
-      let speaker_lines = play_text.acts[act_number].scenes[scene_number].speeches[i].lines;
-      elements = [['text_node', speaker_lines]];
-      div_speech.appendChild(create_tag('p', elements));
-    }
-
-    console.log(article_act_here); //test
-    console.log(play_text); //test
-  }
-
-
   console.log(interface); //test
 }
 

@@ -49,3 +49,10 @@ function sortList(list, type) {
 
     return list;
 }
+
+/**
+ *  https://codeburst.io/javascript-array-distinct-5edc93501dc4
+ */
+const distinct = (value, index, self) => {
+  return self.indexOf(value) === index;
+}
