@@ -20,8 +20,11 @@
  *                            everything to local storage. I have to practically change most of
  *                            my code that calls the local variable.
  *  
- *  View Play Text: When the play is avaible in the API it shows the 
+ *  The add icon: I'm not sure what to do with this one. I don't understand the instruction.
+ *                It's already too late to ask for it now (2021 - 11 - 17)
  */
+
+ let img_1 = "url('https://live.staticflickr.com/2581/3863625496_07cc2ff381_o.jpg')";
 
 const EXIST = 0;
 const PLAY = 1;
@@ -141,6 +144,7 @@ function display_available_plays() {
     play_list.appendChild(li);
   }
   //console.log(play_list); //test
+
   return play_list;
 }
 
@@ -296,6 +300,8 @@ async function view_play_here(play_text, selected_act, selected_scene, filter_sp
   play_here.innerHTML = '';
   elements = [['text_node', play_text.title]];
   play_here.appendChild(create_tag('h2', elements));
+  /*play_here.style.backgroundImage = img_1;
+  play_here.style.opacity = 1;*/
 
   elements = [['id', 'actHere']];
   let article_act_here = create_tag('article', elements);
