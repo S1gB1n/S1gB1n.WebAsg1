@@ -22,9 +22,16 @@
  *  
  *  The add icon: I'm not sure what to do with this one. I don't understand the instruction.
  *                It's already too late to ask for it now (2021 - 11 - 17)
+ * 
+ *  The "All Player" selection: Does not seem to change the Text View, even though you cleary change
+ *                              the value to a specific player. But the value is still being change 
+ *                              logically when you click on filter, it will filter out the selected 
+ *                              player speeches.
  */
 
- let img_1 = "url('https://live.staticflickr.com/2581/3863625496_07cc2ff381_o.jpg')";
+let img_1 = "url('https://live.staticflickr.com/2581/3863625496_07cc2ff381_o.jpg')";
+let img_2 = "url('https://www.vhv.rs/dpng/d/609-6096831_shakespeare-transparent-romeo-and-juliet-illustration-hd-png.png')";
+let img_3 = "url('3863625496_07cc2ff381_o_1.jpg')" // source: https://live.staticflickr.com/2581/3863625496_07cc2ff381_o.jpg
 
 const EXIST = 0;
 const PLAY = 1;
@@ -300,8 +307,8 @@ async function view_play_here(play_text, selected_act, selected_scene, filter_sp
   play_here.innerHTML = '';
   elements = [['text_node', play_text.title]];
   play_here.appendChild(create_tag('h2', elements));
-  /*play_here.style.backgroundImage = img_1;
-  play_here.style.opacity = 1;*/
+  play_here.style.backgroundImage = img_3;
+  play_here.style.opacity = 1;
 
   elements = [['id', 'actHere']];
   let article_act_here = create_tag('article', elements);
@@ -548,6 +555,9 @@ function set_view_play_text(play) {
 
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+  let set_background = document.getElementById('playHere');
+  set_background.style.backgroundImage = img_3;
 
   //#3
   //initial display: sorted name

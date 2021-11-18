@@ -125,7 +125,8 @@ fieldset {
 /* ----- styles for play text ------ */
 
 p.title {
-   font-weight: 600; 
+   
+   font-weight: 900; 
    margin: 0;
 }
 p.direction {
@@ -136,10 +137,12 @@ p.direction {
 .speech span {
    display: block;
    margin-top: 12px;
-   font-weight: 700;
+   font-weight: 900;
 }
 .speech p {
    margin: 0;
+   font-size: 20px;
+   font-weight: bold;
 }
 .speech p b {
    background-color: yellow;

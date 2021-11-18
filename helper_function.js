@@ -1,3 +1,13 @@
+
+/**
+ * Author: Erl John Lydzustre
+ * Update: 2021 - 11 - 17
+ * 
+ * Instructor: Randy Connolly
+ * 
+ * Project: Asg2: Shakespeare Play Viewer
+ * /
+ 
 /**
  * https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_sort_list
  *  
